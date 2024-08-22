@@ -8,10 +8,12 @@ from SimpleEngine.Time import *
 
 class Game:
 
+	Instance = None
 
 	def __init__(self, backgroundColor, targetFPS):
 		self.backgroundColor = backgroundColor
 		self.targetFPS = targetFPS
+		Game.Instance = self;
 
 	def InitDisplay(self, size, title):
 		pygame.init()
@@ -23,24 +25,36 @@ class Game:
 		
 
 	def Start(self, scene):
-		self.scene = scene
+		self.loadedScene = scene
 		self.started = True
 
 		while self.started == True:
 			self.display.fill(self.backgroundColor)
 
-			events = pygame.event.get()
+			Input.Events = pygame.event.get()
 
 			Input.Keys = pygame.key.get_pressed()
 
-			for event in events:
+			for event in Input.Events:
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					return
 
-			scene.update()
+			self.loadedScene.update()
 
-			self.scene.render(self.display)
+			self.loadedScene.render(self.display)
 			pygame.display.update()
 
 			Time.DeltaTime = self.clock.tick(self.targetFPS) / 1000
+
+	def LoadScene(self, scene):
+		self.loadedScene = scene
+
+	def SpawnGameObject(self, object):
+		if self.loadedScene != None:
+			self.loadedScene.objects.append(object);
+		
+	def DestroyGameObject(self, object):
+		self.loadedScene.objects.remove(object);
+		
+		
