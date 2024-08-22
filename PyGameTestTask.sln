@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35026.282
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PyGameTestTask", "PyGameTestTask\PyGameTestTask.pyproj", "{EF784385-6967-42B6-A6D9-951A6DE0115A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF784385-6967-42B6-A6D9-951A6DE0115A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF784385-6967-42B6-A6D9-951A6DE0115A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42982DED-B021-46EE-9FD6-E1F77E6086D6}
+	EndGlobalSection
+EndGlobal
