@@ -9,16 +9,19 @@ from Game.Projectile import *
 
 class Player(GameObject):
     
-     def __init__(self, color, x, y, w, h, movementSpeed):
-        super().__init__(color, x, y, w, h)
+     def __init__(self, fileName, movementSpeed):
+        super().__init__(fileName)
         self.movementSpeed = movementSpeed
 
      def update(self):
         if Input.isKeyPressed(KeyCode.LeftArrow):
-            self.x -= 10
+            self.rect.x -= self.movementSpeed * Time.DeltaTime
 
         if Input.isKeyPressed(KeyCode.RightArrow):
-            self.x += 10
+             self.rect.x += self.movementSpeed * Time.DeltaTime
 
         if Input.isKeyDown(KeyCode.Space):
-            Game.Instance.SpawnGameObject(Projectile((255, 255, 255), x = self.x, y = self.y, w = 10, h = 10, movementSpeed = 500));
+            projectile = Projectile("Assets/Sprites/Projectile.png", 1000)
+            projectile.rect.x = self.rect.x + self.rect.w / 2
+            projectile.rect.y = self.rect.y - 20
+            Game.Instance.AddGameObjectToLoadedScene(projectile);

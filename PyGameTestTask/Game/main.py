@@ -1,13 +1,14 @@
 from SimpleEngine.Game import * 
 from Game.Player import * 
 
+game = Game((39, 3, 58), 60)
+game.InitDisplay((800, 600), "TestTask")
 
-player = Player((255, 255, 255), x = 400, y = 530, w = 50, h = 50, movementSpeed = 10)
+player = Player("Assets/Sprites/Ship.png", 1000)
+player.rect.x = 400
+player.rect.y = 500
 
 scene = Scene([player]);
-
-game = Game((0, 0, 0), 60)
-game.InitDisplay((800, 600), "TestTask")
 game.Start(scene)
 
 

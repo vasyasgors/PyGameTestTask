@@ -50,11 +50,11 @@ class Game:
 	def LoadScene(self, scene):
 		self.loadedScene = scene
 
-	def SpawnGameObject(self, object):
+	def AddGameObjectToLoadedScene(self, object):
 		if self.loadedScene != None:
 			self.loadedScene.objects.append(object);
 		
-	def DestroyGameObject(self, object):
+	def RemoveGameObjectFromLoadedScene(self, object):
 		self.loadedScene.objects.remove(object);
 		
 		
