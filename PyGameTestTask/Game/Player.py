@@ -7,7 +7,7 @@ from SimpleEngine.Game import *
 
 from Game.Projectile import * 
 
-class Player(GameObject):
+class Player(SpriteGameObject):
     
      def __init__(self, fileName, movementSpeed):
         super().__init__(fileName)

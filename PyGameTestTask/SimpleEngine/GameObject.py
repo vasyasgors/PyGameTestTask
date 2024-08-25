@@ -1,6 +1,6 @@
 import pygame
 
-class GameObject(pygame.sprite.Sprite):
+class SpriteGameObject(pygame.sprite.Sprite):
 
     def __init__(self, fileName):
         pygame.sprite.Sprite.__init__(self)
@@ -13,5 +13,13 @@ class GameObject(pygame.sprite.Sprite):
     def render(self, display):
        #pygame.draw.rect(display, self.color, (self.x, self.y, self.w, self.h))
        display.blit(self.image, self.rect)
+       pass
+
+class GameObject():
+
+    def update(self):
+       pass
+
+    def render(self, display):
        pass
 

@@ -5,7 +5,8 @@ from SimpleEngine.GameObject import *
 from SimpleEngine.Input import * 
 from SimpleEngine.Game import * 
 
-class Projectile(GameObject):
+#Сделать один мовабле
+class Projectile(SpriteGameObject):
     
      def __init__(self, fileName, movementSpeed):
         super().__init__(fileName)
@@ -13,3 +14,6 @@ class Projectile(GameObject):
 
      def update(self):
         self.rect.y -= self.movementSpeed * Time.DeltaTime
+
+        if self.rect.y < -100:
+            Game.Instance.RemoveGameObjectFromLoadedScene(self)
