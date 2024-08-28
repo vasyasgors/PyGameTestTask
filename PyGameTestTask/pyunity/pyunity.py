@@ -29,7 +29,7 @@ class PyUnity:
 		PyUnity.clock = pygame.time.Clock()
 		
 	@staticmethod
-	def load_scene(scene):
+	def start_main_loop(scene):
 		PyUnity.loaded_scene = scene
 		PyUnity.is_started = True
 
@@ -62,4 +62,6 @@ class PyUnity:
 		if PyUnity.loaded_scene != None:
 			PyUnity.loaded_scene.remove_object(object);
 
-
+	@staticmethod	
+	def load_scene(scene):
+		loaded_scene = scene

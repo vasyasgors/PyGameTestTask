@@ -1,30 +1,34 @@
 from pyunity.pyunity import *
 
-from behaviours import *
+from behaviours import * 
 
 #init game
 PyUnity.create_display((800, 600), "TestTask", (39, 3, 58));
 
+#init game scene
+player_behaviour = PlayerBehaviour(600)
+player_renderer = SpriteRenderer("Assets/Sprites/Ship.png")
 
-#create game object
-player = GameObject(PlayerBehaviour(600), SpriteRenderer("Assets/Sprites/Ship.png"), "Player")
-player.rect.x = 450
-player.rect.y = 480
+player_object = GameObject(player_behaviour, player_renderer, "Player")
+player_object.rect.x = 450
+player_object.rect.y = 480
 
+asteroid_spawner_behaviour = AsteroidSpawner(random.random(),  Vector4(0, 800, -100, -90))
+asteroid_spawner_object = GameObject(asteroid_spawner_behaviour, None)
 
+score_render = TextRenderer(None, 50, (249, 223, 119), "-", Vector2(400, 40))
+score_object = GameObject(Score(score_render), score_render)
 
-asteroid_spawner = GameObject(AsteroidSpawner(random.random(),  Vector4(0, 800, -100, -90)) )
+game_timer_renderer = TextRenderer(None, 30, (249, 223, 119), "-", Vector2(400, 80))
+game_timer_behaviour = GameTimer(3, game_timer_renderer)
+game_timer_object = GameObject(game_timer_behaviour, game_timer_renderer)
 
-score_text_render = TextRenderer(None, 50, (249, 223, 119), "0", Vector2(400, 40))
-score_panel = GameObject(Score(score_text_render), score_text_render)
+game_manager_behaviour = GameManager(score_object.behaviour, game_timer_behaviour, player_behaviour)
+game_manager_object = GameObject(game_manager_behaviour, None)
 
+main_scene = Scene([player_object, asteroid_spawner_object, score_object, game_timer_object, game_manager_object])
 
-game_manager = GameObject( GameManager(score_panel.behaviour))
-
-
-
-#create scene
-main_scene = Scene([player, asteroid_spawner, score_panel]);
-PyUnity.load_scene(main_scene)
+#start game
+PyUnity.start_main_loop(main_scene)
 
 

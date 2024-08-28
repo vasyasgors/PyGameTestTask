@@ -1,5 +1,5 @@
 class Scene:
-    def __init__(self, objects):
+    def __init__(self, objects = []):
          self.objects = objects 
          self.object_to_destroy = []
          self.object_to_add = []
@@ -18,10 +18,11 @@ class Scene:
 
         for i in range(len(self.objects)):
             if self.objects[i].behaviour != None:
-                self.objects[i].behaviour.update()
-
+                if self.objects[i].behaviour.enabled == True:
+                    self.objects[i].behaviour.update()
+            
+            # Check collision
             for j in range(len(self.objects)):
-
                 if i == j:
                     continue
 

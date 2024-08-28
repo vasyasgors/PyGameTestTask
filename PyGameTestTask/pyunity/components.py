@@ -4,6 +4,7 @@ class Behaviour:
 
     def __init__(self):
         self.game_object = None
+        self.enabled = True
 
     def start(self):
         pass

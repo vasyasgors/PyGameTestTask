@@ -4,6 +4,7 @@ class KeyCode:
     LEFT_ARROW = pygame.K_LEFT
     RIGHT_ARROW = pygame.K_RIGHT
     SPACE = pygame.K_SPACE
+    R = pygame.K_r
 
 class Input:
 
