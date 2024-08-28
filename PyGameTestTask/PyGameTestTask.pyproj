@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ef784385-6967-42b6-a6d9-951a6de0115a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Game\main.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,28 +21,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game\Spawner.py" />
-    <Compile Include="Game\Obstacle.py" />
-    <Compile Include="Game\Projectile.py" />
-    <Compile Include="Game\Player.py">
+    <Compile Include="behaviours.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Game\main.py" />
-    <Compile Include="SimpleEngine\Game.py">
+    <Compile Include="main.py" />
+    <Compile Include="pyunity\objects.py" />
+    <Compile Include="pyunity\pyunity.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SimpleEngine\Scene.py" />
-    <Compile Include="SimpleEngine\GameObject.py">
+    <Compile Include="pyunity\scene.py" />
+    <Compile Include="pyunity\components.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SimpleEngine\Input.py" />
-    <Compile Include="SimpleEngine\Time.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="pyunity\input.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\" />
-    <Folder Include="SimpleEngine\" />
+    <Folder Include="pyunity\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
