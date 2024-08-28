@@ -55,11 +55,11 @@ class PyUnity:
 	@staticmethod	
 	def add_object_to_loaded_scene(object):
 		if PyUnity.loaded_scene != None:
-			PyUnity.loaded_scene.objects.append(object);
+			PyUnity.loaded_scene.add_object(object);
 
 	@staticmethod	
 	def remove_object_form_loaded_scene(object):
 		if PyUnity.loaded_scene != None:
-			PyUnity.loaded_scene.objects.remove(object);
+			PyUnity.loaded_scene.remove_object(object);
 
 
