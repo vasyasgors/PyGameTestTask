@@ -1,7 +1,11 @@
 from pyunity.pyunity import *
 from scenes import *
 
+import config
 
+
+#config.player_name = input("Введите ваше имя: ")
+config.player_name = "player_test"
 
 
 #init game

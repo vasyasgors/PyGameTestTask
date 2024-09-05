@@ -5,7 +5,7 @@ from pyunity.components import *
 from pyunity.objects import * 
 from pyunity.pyunity import * 
 
-
+import config
 
 class GameState:
     PLAYING = 1
@@ -27,6 +27,7 @@ class GameManager(Behaviour):
     def update(self):
          if Input.is_key_down(KeyCode.R):
              # По хорошему, переделать структуру программы
+             # класс загрузчик сцен который инициализируется после всего
              from scenes import create_main_scene
              PyUnity.load_scene(create_main_scene())
 
@@ -46,11 +47,18 @@ class GameManager(Behaviour):
         self.timer.enabled = False
         self.player.enabled = False
         self.player.game_object.rect = None
-        win_panel = GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Победа", Vector2(400, 300)))
-        PyUnity.add_object_to_loaded_scene(win_panel)
-       
+        self.show_result()
 
 
+    def show_result(self):
+         text = GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Победа", Vector2(400, 250)))
+         PyUnity.add_object_to_loaded_scene(text)
+
+         for i in range(5):
+              text = GameObject(None, TextRenderer(None, 30, (249, 223, 119), str(i) + " : " + config.player_name,
+                                                  Vector2(400, 300 + i * 20)))
+              PyUnity.add_object_to_loaded_scene(text)
+      
 class Score(Behaviour):
     def __init__(self, text_render):
         super().__init__()
