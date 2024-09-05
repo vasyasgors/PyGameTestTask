@@ -64,4 +64,4 @@ class PyUnity:
 
 	@staticmethod	
 	def load_scene(scene):
-		loaded_scene = scene
+		PyUnity.loaded_scene = scene

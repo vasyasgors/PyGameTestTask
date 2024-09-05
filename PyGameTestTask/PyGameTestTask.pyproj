@@ -24,6 +24,8 @@
     <Compile Include="behaviours.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="game.py" />
+    <Compile Include="scenes.py" />
     <Compile Include="main.py" />
     <Compile Include="pyunity\objects.py" />
     <Compile Include="pyunity\pyunity.py">

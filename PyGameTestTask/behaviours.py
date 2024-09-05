@@ -1,10 +1,10 @@
-import pygame
 import copy
 import random
 
 from pyunity.components import * 
 from pyunity.objects import * 
 from pyunity.pyunity import * 
+
 
 
 class GameState:
@@ -26,8 +26,9 @@ class GameManager(Behaviour):
 
     def update(self):
          if Input.is_key_down(KeyCode.R):
-            scene = create_game_scene()
-            PyUnity.load_scene(scene)
+             # По хорошему, переделать структуру программы
+             from scenes import create_main_scene
+             PyUnity.load_scene(create_main_scene())
 
     def on_player_collided_asteroid(self):
         self.state = GameState.DEFEAT
