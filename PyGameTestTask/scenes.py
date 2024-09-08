@@ -16,10 +16,10 @@ def create_main_scene():
     score_object = GameObject(Score(score_render), score_render)
 
     game_timer_renderer = TextRenderer(None, 30, (249, 223, 119), "-", Vector2(400, 80))
-    game_timer_behaviour = GameTimer(1, game_timer_renderer)
+    game_timer_behaviour = GameTimer(4, game_timer_renderer)
     game_timer_object = GameObject(game_timer_behaviour, game_timer_renderer)
 
-    game_manager_behaviour = GameManager(score_object.behaviour, game_timer_behaviour, player_behaviour)
+    game_manager_behaviour = GameManager(score_object.behaviour, game_timer_behaviour, player_behaviour, asteroid_spawner_behaviour)
     game_manager_object = GameObject(game_manager_behaviour, None)
 
 

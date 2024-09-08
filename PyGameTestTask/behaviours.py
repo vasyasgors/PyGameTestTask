@@ -6,6 +6,7 @@ from pyunity.objects import *
 from pyunity.pyunity import * 
 
 import config
+import database
 
 class GameState:
     PLAYING = 1
@@ -16,12 +17,13 @@ class GameManager(Behaviour):
 
     instance = None
 
-    def __init__(self, score, timer, player):
+    def __init__(self, score, timer, player, asteroid_spawner_behaviour):
         super().__init__()
         GameManager.instance = self
         self.score = score
         self.timer = timer
         self.player = player
+        self.asteroid_spawner_behaviour = asteroid_spawner_behaviour
         self.state = GameState.PLAYING
 
     def update(self):
@@ -36,6 +38,7 @@ class GameManager(Behaviour):
         lose_panel = GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Проиграл", Vector2(400, 300)))
         PyUnity.add_object_to_loaded_scene(lose_panel)
         self.timer.enabled = False
+        self.asteroid_spawner_behaviour.enabled = False
         
     def on_projectile_collided_asteroid(self):
         self.score.add_score(1)
@@ -47,6 +50,9 @@ class GameManager(Behaviour):
         self.timer.enabled = False
         self.player.enabled = False
         self.player.game_object.rect = None
+        self.asteroid_spawner_behaviour.enabled = False
+        database.set_record(config.player_name, self.score.score)
+
         self.show_result()
 
 
@@ -54,9 +60,20 @@ class GameManager(Behaviour):
          text = GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Победа", Vector2(400, 250)))
          PyUnity.add_object_to_loaded_scene(text)
 
-         for i in range(5):
-              text = GameObject(None, TextRenderer(None, 30, (249, 223, 119), str(i) + " : " + config.player_name,
-                                                  Vector2(400, 300 + i * 20)))
+         record_list = database.get_records()
+
+         color_other = (249, 223, 119)
+         color_current = (200, 0, 0)
+         color = color_other
+
+         for i in range(len(record_list)):
+              if record_list[i][0] == config.player_name: 
+                  color = color_current
+              else:
+                  color = color_other
+              dispaly_text = "Игрок: " + str(record_list[i][0]) + "   Очки: " + str(record_list[i][1])
+
+              text = GameObject(None, TextRenderer(None, 30, color, dispaly_text, Vector2(400, 300 + i * 20)))
               PyUnity.add_object_to_loaded_scene(text)
       
 class Score(Behaviour):
