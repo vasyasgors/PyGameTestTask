@@ -8,11 +8,6 @@ from pyunity.pyunity import *
 import config
 import database
 
-class GameState:
-    PLAYING = 1
-    DEFEAT = 2
-    WIN = 3
-
 class GameManager(Behaviour):
 
     instance = None
@@ -20,48 +15,42 @@ class GameManager(Behaviour):
     def __init__(self, score, timer, player, asteroid_spawner_behaviour):
         super().__init__()
         GameManager.instance = self
+
         self.score = score
         self.timer = timer
         self.player = player
         self.asteroid_spawner_behaviour = asteroid_spawner_behaviour
-        self.state = GameState.PLAYING
 
     def update(self):
          if Input.is_key_down(KeyCode.R):
-             # По хорошему, переделать структуру программы
-             # класс загрузчик сцен который инициализируется после всего
              from scenes import create_main_scene
              PyUnity.load_scene(create_main_scene())
 
-    def on_player_collided_asteroid(self):
-        self.state = GameState.DEFEAT
-        lose_panel = GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Проиграл", Vector2(400, 300)))
-        PyUnity.add_object_to_loaded_scene(lose_panel)
-        self.timer.enabled = False
-        self.asteroid_spawner_behaviour.enabled = False
-        
     def on_projectile_collided_asteroid(self):
         self.score.add_score(1)
         self.score.update_score_text()
-        pass
+
+    def on_player_collided_asteroid(self):
+        PyUnity.add_object_to_loaded_scene(GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Поражение", Vector2(400, 250))))
+        PyUnity.add_object_to_loaded_scene(GameObject(None, TextRenderer(None, 20, (249, 223, 119), "Нажмите \"R\" - чтобы начать заново", Vector2(400, 280))))
+
+        self.timer.enabled = False
+        self.asteroid_spawner_behaviour.enabled = False
 
     def on_game_timer_finished(self):
-        self.state = GameState.WIN
+        PyUnity.add_object_to_loaded_scene(GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Победа", Vector2(400, 250))))
+        PyUnity.add_object_to_loaded_scene(GameObject(None, TextRenderer(None, 20, (249, 223, 119), "Нажмите \"R\" - чтобы начать заново", Vector2(400, 280))))
+
         self.timer.enabled = False
         self.player.enabled = False
         self.player.game_object.rect = None
         self.asteroid_spawner_behaviour.enabled = False
         database.set_record(config.player_name, self.score.score)
-
         self.show_result()
 
 
     def show_result(self):
-         text = GameObject(None, TextRenderer(None, 50, (249, 223, 119), "Победа", Vector2(400, 250)))
-         PyUnity.add_object_to_loaded_scene(text)
-
          record_list = database.get_records()
-
          color_other = (249, 223, 119)
          color_current = (200, 0, 0)
          color = color_other
@@ -72,10 +61,8 @@ class GameManager(Behaviour):
               else:
                   color = color_other
               dispaly_text = "Игрок: " + str(record_list[i][0]) + "   Очки: " + str(record_list[i][1])
+              PyUnity.add_object_to_loaded_scene( GameObject(None, TextRenderer(None, 30, color, dispaly_text, Vector2(400, 340 + i * 20))) )
 
-              text = GameObject(None, TextRenderer(None, 30, color, dispaly_text, Vector2(400, 300 + i * 20)))
-              PyUnity.add_object_to_loaded_scene(text)
-      
 class Score(Behaviour):
     def __init__(self, text_render):
         super().__init__()
@@ -118,10 +105,10 @@ class PlayerBehaviour(Behaviour):
 
 
     def update(self):
-       if Input.is_key_pressed(KeyCode.LEFT_ARROW):
+       if Input.is_key_pressed(KeyCode.LEFT_ARROW) and self.game_object.rect.x > 0:
            self.game_object.rect.x -= self.movement_speed * Time.delta_time
 
-       if Input.is_key_pressed(KeyCode.RIGHT_ARROW ):
+       if Input.is_key_pressed(KeyCode.RIGHT_ARROW ) and self.game_object.rect.x < 800 - self.game_object.rect.w:
            self.game_object.rect.x += self.movement_speed * Time.delta_time
 
        if Input.is_key_down(KeyCode.SPACE):
@@ -167,7 +154,6 @@ class AsteroidSpawner(Spawner):
 
 class Mover(Behaviour):
 
-    #добавить destruction border
     def __init__(self, direction, speed, destory_y):
         super().__init__()
         self.direction = direction

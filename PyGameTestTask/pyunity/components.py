@@ -29,7 +29,7 @@ class Renderer:
      def render(self, display):
         pass
 
-     def get_rect(self): #уточнить, нужно ли
+     def get_rect(self): 
         pass
 
 class SpriteRenderer(Renderer, pygame.sprite.Sprite):
@@ -74,7 +74,6 @@ class TextRenderer(Renderer):
             self.rect.center = (self.position.x, self.position.y)
             display.blit(text_surface, self.rect)
         
-    # ВОЗМОЖНО И НЕ НУЖНО!
     def blit_multi_lines_text(self, surface, text, pos, font, color):
         words = [word.split(' ') for word in text.splitlines()] 
         space = font.size(' ')[0]
